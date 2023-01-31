@@ -40,15 +40,16 @@ int main(void) {
 void runCommand(char **argv){
 
    if(strcmp(argv[0], "cd") == 0){
-      printf("chdir called...\n");
       pid_t pid = chdir(argv[1]);
+      char cwd[100];
+      getcwd(cwd, 100);
+      printf("Current Directory: %s ", cwd);
       if(pid == -1){
 	perror("chdir");
 	printf("Second word of command line: %s\n", argv[1]);
       }	
    }	   
    if(strcmp(argv[0], "ls") == 0){
-     printf("ls called...");
      pid_t pid = fork();
         if(pid == 0){
 	   execvp(argv[0], argv);
